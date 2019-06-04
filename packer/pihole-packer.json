@@ -2,12 +2,10 @@
   "builders": [{
     "type": "amazon-ebs",
     "profile": "default",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-west-2",
     "source_ami": "ami-094fb12766893ea2f",
     "instance_type": "t2.micro",
-    "ssh_username": "pi-hole",
+    "ssh_username": "ubuntu",
     "ami_name": "pihole-packer {{timestamp}}"
   }],
   "provisioners": [
