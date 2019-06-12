@@ -19,9 +19,13 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get install sudo"
+        "apt-get update",
+        "apt-get install sudo",
+        "useradd ubuntu"
       ],
-      "only": ["docker"]
+      "only": [
+        "docker"
+      ]
     },
     {
       "type": "shell",
