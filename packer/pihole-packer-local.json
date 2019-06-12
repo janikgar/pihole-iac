@@ -1,32 +1,21 @@
 {
   "builders": [
     {
-      "type": "docker",
-      "image": "ubuntu:18.04",
-      "commit": true
-    },
-    {
-      "type": "amazon-ebs",
-      "profile": "default",
-      "ami_name": "jg-pihole",
-      "instance_type": "t2.micro",
-      "region": "us-west-2",
-      "source_ami": "ami-005bdb005fb00e791",
-      "ssh_username": "ubuntu"
+      "type": "vagrant",
+      "box_name": "pihole",
+      "provider": "hyperv",
+      "source_path": "bento/ubuntu-16.04",
+      "communicator": "ssh"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
       "inline": [
-        "apt-get install sudo"
-      ],
-      "only": ["docker"]
-    },
-    {
-      "type": "shell",
-      "inline": [
         "sleep .30",
+        "useradd ubuntu",
+        "apt-get update -y -qq",
+        "apt-get install sudo -y -qq",
         "sudo mkdir -p /etc/pihole",
         "sudo chown ubuntu /etc/pihole"
       ]
