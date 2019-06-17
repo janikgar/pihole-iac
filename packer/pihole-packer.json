@@ -1,14 +1,9 @@
 {
   "builders": [
     {
-      "type": "docker",
-      "image": "ubuntu:18.04",
-      "commit": true
-    },
-    {
       "type": "amazon-ebs",
       "profile": "default",
-      "ami_name": "jg-pihole",
+      "ami_name": "jg-pihole-{{timestamp}}",
       "instance_type": "t2.micro",
       "region": "us-west-2",
       "source_ami": "ami-005bdb005fb00e791",
@@ -19,18 +14,7 @@
     {
       "type": "shell",
       "inline": [
-        "apt-get update",
-        "apt-get install sudo",
-        "useradd ubuntu"
-      ],
-      "only": [
-        "docker"
-      ]
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "sleep .30",
+        "sleep 60",
         "sudo mkdir -p /etc/pihole",
         "sudo chown ubuntu /etc/pihole"
       ]
@@ -43,8 +27,8 @@
     {
       "type": "shell",
       "inline": [
-        "sudo echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections",
-        "sudo echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-selections",
+        "sudo bash -c \"echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections\"",
+        "sudo bash -c \"echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-selections\"",
         "sudo apt-get update -y -qq",
         "sudo apt-get --no-install-recommends install dialog git iproute2 whiptail cron apt-utils dhcpcd5 curl ca-certificates dnsutils iputils-ping lsof netcat psmisc sudo unzip wget idn2 sqlite3 libcap2-bin dns-root-data resolvconf libcap2 lighttpd php-common php-cgi php-sqlite3 -y -qq",
         "curl -sSL https://install.pi-hole.net | sudo bash /dev/stdin --unattended"
@@ -52,11 +36,6 @@
     }
   ],
   "post-processors": [
-    {
-      "type": "docker-tag",
-      "repository": "janikgar/pihole",
-      "tag": "0.1"
-    },
     {
       "type": "vagrant"
     }
