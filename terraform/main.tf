@@ -3,6 +3,10 @@ variable "region" {
   default = "us-west-2"
 }
 
+variable "ami_id" {
+  description = "AMI built in Packer"
+  default = "ami-0adafe63ecb0f6ed3"
+}
 
 provider "aws" {
   profile = "default"
@@ -10,6 +14,6 @@ provider "aws" {
 }
 
 resource "aws_instance" "pihole-single" {
-  ami = "ami-0adafe63ecb0f6ed3"
+  ami = "${var.ami_id}"
   instance_type = "t2.micro"
 }
