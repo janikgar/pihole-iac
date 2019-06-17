@@ -6,8 +6,8 @@
       "ami_name": "jg-pihole-{{timestamp}}",
       "instance_type": "t2.micro",
       "region": "us-west-2",
-      "source_ami": "ami-005bdb005fb00e791",
-      "ssh_username": "ubuntu"
+      "source_ami": "ami-05a3ef6744aa96514",
+      "ssh_username": "admin"
     }
   ],
   "provisioners": [
@@ -16,7 +16,7 @@
       "inline": [
         "sleep 60",
         "sudo mkdir -p /etc/pihole",
-        "sudo chown ubuntu /etc/pihole"
+        "sudo chown admin /etc/pihole"
       ]
     },
     {
